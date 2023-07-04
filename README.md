@@ -7,6 +7,8 @@ Look at the [Nuxt 3 documentation](https://nuxt.com/docs/getting-started/introdu
 Start project with:
 #npm
 npm install shared && pnpm run dev
+TASKS:
+-- Set up mocks.
 
 Make sure to install the dependencies:
 
