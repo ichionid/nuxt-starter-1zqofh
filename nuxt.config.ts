@@ -5,15 +5,7 @@ const config: NuxtConfig = {
   buildModules: ['@nuxt/typescript-build', '@nuxtjs/tailwindcss'],
 
   // Configure the HTTP module
-  modules: ['@nuxt/http', '@nuxtjs/tailwindcss'],
-  http: {
-    // Enable mocking
-    mock: true,
-  },
-
-  // Define your API mocks
-  serverMiddleware: ['~/mocks/index.js'],
-
+  modules: ['@nuxtjs/tailwindcss'],
   // Other Nuxt configuration options...
 };
 

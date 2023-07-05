@@ -1,19 +1,14 @@
 <template>
-  <div>
-    <h1>Posts</h1>
-    <ul>
-      <li v-for="post in posts" :key="post.id">{{ post.title }}</li>
-    </ul>
+  <!-- you will need to handle a loading state -->
+  <div v-if="pending">Loading ...</div>
+  <div v-else>
+    <div v-for="post in posts">
+      <!-- do something -->
+    </div>
   </div>
 </template>
-
-<script>
-export default {
-  async asyncData({ $http }) {
-    // Make a GET request to the API endpoint
-    const { data: posts } = await $http.get('/api/posts');
-
-    return { posts };
-  },
-};
+<script setup>
+const { pending, data: posts } = useFetch('http://localhost:3000/search', {
+  lazy: true,
+});
 </script>
