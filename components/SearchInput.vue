@@ -1,14 +1,33 @@
 <template>
-  <!-- you will need to handle a loading state -->
-  <div v-if="pending">Loading ...</div>
-  <div v-else>
-    <div v-for="post in posts">
-      <!-- do something -->
-    </div>
+  <div>
+    <h1>Example Component</h1>
+    <ul>
+      <li v-for="item in items" :key="item.id">{{ item.Title }}</li>
+    </ul>
   </div>
 </template>
-<script setup>
-const { pending, data: posts } = useFetch('http://localhost:3000/search', {
-  lazy: true,
-});
+
+<script>
+export default {
+  data() {
+    return {
+      items: [],
+    };
+  },
+  async mounted() {
+    const runtimeConfig = useRuntimeConfig();
+
+    try {
+      const response = await fetch(
+        runtimeConfig.public.runtimeConfig + '/platforms'
+      );
+      const data = await response.json();
+      console.log('data');
+      console.log(data);
+      this.items = data;
+    } catch (error) {
+      console.error('Error fetching data:', error);
+    }
+  },
+};
 </script>
