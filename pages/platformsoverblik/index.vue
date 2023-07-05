@@ -1,3 +1,19 @@
+<script setup>
+const runtimeConfig = useRuntimeConfig();
+const { data } = await useFetch(runtimeConfig.public.apiBase + 'platforms', {
+  transform: (platforms) => {
+    return platforms.map((platform) => ({
+      title:
+        '<a href="platformsoverblik/platform/' +
+        platform.id +
+        '">' +
+        platform.Title +
+        '</a>',
+    }));
+  },
+});
+</script>
+
 <template>
   <div>
     <div class="px-12 lg:px-48">
@@ -11,48 +27,8 @@
         eller et system kan du klikke på det. Vær opmærksom på at alle platforme
         indeholde ét eller flere forretningskritiske systemer.
       </p>
-      <div v-if="pending">
-        Fuck
-        <!-- Content to render when data is available -->
-      </div>
-
-      <div v-else>
-        <Table :items="items" />
-        <!-- Content to render when data is not available -->
-      </div>
+      <Table :items="data" :headers="['Platform']" />
+      <!-- Content to render when data is not available -->
     </div>
   </div>
 </template>
-
-<script>
-export default {
-  data() {
-    return {
-      items: [],
-    };
-  },
-  async mounted() {
-    try {
-      const runtimeConfig = useRuntimeConfig();
-      const { pending, data } = useFetch( runtimeConfig.public.apiBase + 'platforms',
-        {
-          transform: (platforms) => {
-            return platforms.map((platform) => ({
-              title:
-                '<a href="plaformsoverblik/platform/' +
-                platform.id +
-                '">' +
-                platform.Title +
-                '</a>',
-            }));
-          },
-        },
-        lazy: true,
-      );
-      this.items = data;
-    } catch (error) {
-      console.error('Error fetching data:', error);
-    }
-  },
-};
-</script>

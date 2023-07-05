@@ -1,5 +1,5 @@
 <template>
-  <table class="table-fixed flex flex-row border-b border-b-darkgray">
+  <table class="table-auto border-b border-b-darkgray">
     <thead v-if="headers">
       <tr>
         <th v-for="(header, index) in headers" :key="index">
@@ -8,7 +8,11 @@
       </tr>
     </thead>
     <tbody>
-      <tr v-for="(item, index) in items" :key="index">
+      <tr
+        class="even:bg-lightgray odd:bg-white"
+        v-for="(item, index) in items"
+        :key="index"
+      >
         <td
           v-for="(value, valueIndex) in item"
           :key="valueIndex"
