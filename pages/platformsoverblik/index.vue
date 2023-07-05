@@ -11,8 +11,15 @@
         eller et system kan du klikke på det. Vær opmærksom på at alle platforme
         indeholde ét eller flere forretningskritiske systemer.
       </p>
-      <Table :items="items" />
-      <pre class="text-left text-xs">{{ data }}</pre>
+      <div v-if="pending">
+        Fuck
+        <!-- Content to render when data is available -->
+      </div>
+
+      <div v-else>
+        <Table :items="items" />
+        <!-- Content to render when data is not available -->
+      </div>
     </div>
   </div>
 </template>
@@ -22,26 +29,27 @@ export default {
   data() {
     return {
       items: [],
-      data: [],
     };
   },
   async mounted() {
     try {
       const runtimeConfig = useRuntimeConfig();
-      const { data } = await useFetch(
-        runtimeConfig.public.apiBase + 'platforms',
+      const { pending, data } = useFetch( runtimeConfig.public.apiBase + 'platforms',
         {
           transform: (platforms) => {
             return platforms.map((platform) => ({
-              title: platform.Title + 123,
-              id: platform.id,
+              title:
+                '<a href="plaformsoverblik/platform/' +
+                platform.id +
+                '">' +
+                platform.Title +
+                '</a>',
             }));
           },
-        }
+        },
+        lazy: true,
       );
-
-      //const data = await response.json();
-      //this.items = data;
+      this.items = data;
     } catch (error) {
       console.error('Error fetching data:', error);
     }

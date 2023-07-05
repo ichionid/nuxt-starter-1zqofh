@@ -9,9 +9,11 @@
     </thead>
     <tbody>
       <tr v-for="(item, index) in items" :key="index">
-        <td v-for="(value, valueIndex) in item" :key="valueIndex">
-          {{ value }}
-        </td>
+        <td
+          v-for="(value, valueIndex) in item"
+          :key="valueIndex"
+          v-html="value"
+        ></td>
       </tr>
     </tbody>
   </table>
